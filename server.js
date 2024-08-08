@@ -1,5 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const { exec } = require("child_process")
 const cors = require("cors")
 const { PythonShell } = require("python-shell")
 
@@ -8,6 +9,14 @@ const port = 3000
 
 app.use(bodyParser.json())
 app.use(cors())
+
+exec("pip install -r requirements.txt", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error installing Python dependencies: ${error}`)
+    return
+  }
+  console.log(`Python dependencies installed: ${stdout}`)
+})
 
 app.post("/predict", async (req, res) => {
   const input = req.body
