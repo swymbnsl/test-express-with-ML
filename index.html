@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lung Cancer Prediction</title>
+    <script>
+      async function predictCancer() {
+        const input = {
+          AGE: document.getElementById("age").value,
+          SMOKING: document.getElementById("smoking").value,
+          YELLOW_FINGERS: document.getElementById("yellow_fingers").value,
+          ANXIETY: document.getElementById("anxiety").value,
+          PEER_PRESSURE: document.getElementById("peer_pressure").value,
+          CHRONIC_DISEASE: document.getElementById("chronic_disease").value,
+          FATIGUE: document.getElementById("fatigue").value,
+          ALLERGY: document.getElementById("allergy").value,
+          WHEEZING: document.getElementById("wheezing").value,
+          ALCOHOL_CONSUMING: document.getElementById("alcohol").value,
+          COUGHING: document.getElementById("coughing").value,
+          SHORTNESS_OF_BREATH: document.getElementById("shortness_of_breath")
+            .value,
+          SWALLOWING_DIFFICULTY: document.getElementById(
+            "swallowing_difficulty"
+          ).value,
+          CHEST_PAIN: document.getElementById("chest_pain").value,
+          GENDER: document.getElementById("gender").value,
+        }
+
+        const response = await fetch("http://localhost:3000/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(input),
+        })
+
+        const result = await response.json()
+        document.getElementById(
+          "result"
+        ).innerText = `Prediction: ${result.prediction}`
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Lung Cancer Prediction</h1>
+    <form onsubmit="predictCancer(); return false;">
+      Age: <input type="number" id="age" required /><br />
+      Smoking: <input type="number" id="smoking" required /><br />
+      Yellow Fingers: <input type="number" id="yellow_fingers" required /><br />
+      Anxiety: <input type="number" id="anxiety" required /><br />
+      Peer Pressure: <input type="number" id="peer_pressure" required /><br />
+      Chronic Disease:
+      <input type="number" id="chronic_disease" required /><br />
+      Fatigue: <input type="number" id="fatigue" required /><br />
+      Allergy: <input type="number" id="allergy" required /><br />
+      Wheezing: <input type="number" id="wheezing" required /><br />
+      Alcohol Consuming: <input type="number" id="alcohol" required /><br />
+      Coughing: <input type="number" id="coughing" required /><br />
+      Shortness of Breath:
+      <input type="number" id="shortness_of_breath" required /><br />
+      Swallowing Difficulty:
+      <input type="number" id="swallowing_difficulty" required /><br />
+      Chest Pain: <input type="number" id="chest_pain" required /><br />
+      Gender: <input type="number" id="gender" required /><br />
+      <button type="submit">Predict</button>
+    </form>
+    <p id="result"></p>
+  </body>
+</html>
