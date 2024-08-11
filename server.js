@@ -10,7 +10,14 @@ const port = 3000
 app.use(bodyParser.json())
 app.use(cors())
 
-exec("pip install -r requirements.txt", (error, stdout, stderr) => {
+exec("python3 -v", (error, stdout) => {
+  if (error) {
+    console.error(`Error fetching python version: ${error}`)
+    return
+  }
+  console.log(`Python version fetched: ${stdout}`)
+})
+exec("pip install -r requirements.txt", (error, stdout) => {
   if (error) {
     console.error(`Error installing Python dependencies: ${error}`)
     return
