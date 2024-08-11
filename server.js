@@ -10,7 +10,7 @@ const port = 3000
 app.use(bodyParser.json())
 app.use(cors())
 
-exec("pip install numpy pandas joblib scikit-learn", (error, stdout) => {
+exec("pip install numpy pandas joblib scikit-learn==1.5.1", (error, stdout) => {
   console.log("Installing libraries")
   if (error) {
     console.error(`Error installing Python dependencies: ${error}`)
