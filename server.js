@@ -10,14 +10,16 @@ const port = 3000
 app.use(bodyParser.json())
 app.use(cors())
 
-exec("python3 -v", (error, stdout) => {
+exec("python --version", (error, stdout) => {
+  console.log("Fetching python version")
   if (error) {
     console.error(`Error fetching python version: ${error}`)
     return
   }
   console.log(`Python version fetched: ${stdout}`)
 })
-exec("pip install -r requirements.txt", (error, stdout) => {
+exec("pip install numpy pandas joblib scikit-learn", (error, stdout) => {
+  console.log("Installing libraries")
   if (error) {
     console.error(`Error installing Python dependencies: ${error}`)
     return
