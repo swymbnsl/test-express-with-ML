@@ -5,22 +5,19 @@ const cors = require("cors")
 const { PythonShell } = require("python-shell")
 
 const app = express()
-const port = 3000
+const port = 3001
 
 app.use(bodyParser.json())
 app.use(cors())
 
-exec(
-  "pip install numpy==1.21.4 pandas==1.3.3 joblib scikit-learn==1.0.2",
-  (error, stdout) => {
-    console.log("Installing libraries")
-    if (error) {
-      console.error(`Error installing Python dependencies: ${error}`)
-      return
-    }
-    console.log(`Python dependencies installed: ${stdout}`)
+exec("pip install numpy pandas joblib scikit-learn", (error, stdout) => {
+  console.log("Installing libraries")
+  if (error) {
+    console.error(`Error installing Python dependencies: ${error}`)
+    return
   }
-)
+  console.log(`Python dependencies installed: ${stdout}`)
+})
 
 app.post("/predict", async (req, res) => {
   const input = req.body
@@ -37,7 +34,7 @@ app.post("/predict", async (req, res) => {
     const result = await PythonShell.run("predict.py", options)
     console.log(result)
     res.json({
-      prediction: result[2],
+      prediction: result[1],
     })
   } catch (error) {
     console.log(error)
